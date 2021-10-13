@@ -10,6 +10,7 @@ from nonebot.adapters.cqhttp.permission import GROUP_ADMIN, GROUP_OWNER, PRIVATE
 from nonebot.permission import SUPERUSER
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot,Message,GroupMessageEvent,bot,FriendRequestEvent,GroupRequestEvent,GroupDecreaseNoticeEvent
+from nonebot.adapters.cqhttp.message import MessageSegment
 from nonebot import require
 from . import data_source
 from . import model
@@ -20,7 +21,7 @@ model.Init()
 config.token=data_source.init_token()
 tweet_index=0
 scheduler = require('nonebot_plugin_apscheduler').scheduler
-@scheduler.scheduled_job('interval',minutes=60,id='flush_token')
+@scheduler.scheduled_job('interval',minutes=5,id='flush_token')
 async def flush():#定时刷新token
     config.token=await data_source.get_token()
 @scheduler.scheduled_job('interval',seconds=20,id='tweet')
@@ -36,9 +37,11 @@ async def tweet():#定时推送用户最新推文
         tweet_index+=1
         return
     model.UpdateTweet(users[tweet_index][0],tweet_id)
-    text,translate,media,url=data_source.get_tweet_details(data)
-    media=await data_source.download_media(media)
+    text,translate,media_list,url=data_source.get_tweet_details(data)
     translate=await data_source.baidu_translate(config.appid,translate,config.baidu_token)
+    media=''
+    for item in media_list:
+        media+=MessageSegment.image(item)+'\n'
     cards=model.GetALLCard(users[tweet_index][0])
     for card in cards:
         if card[1]==1:#是群聊
@@ -129,7 +132,7 @@ async def handle(bot: Bot, event: MessageEvent, state: T_State):
     for index in user:
         card=model.GetCard(index[0],id,is_group)
         if len(card)!=0:
-            content+='{}({})\n{}\n'.format(index[1],index[0],str(card[2])).replace('1','推文翻译：开').replace('0','推文翻译：关')
+            content+='{}({})\n{}\n'.format(index[1],index[0],str(card[2]).replace('1','推文翻译：开').replace('0','推文翻译：关'))
     if content=='':
         msg='当前群聊/私聊关注列表为空！'
     else:

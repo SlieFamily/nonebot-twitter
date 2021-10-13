@@ -110,6 +110,7 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
    export https_proxy=http://127.0.0.1:端口号 
    ```
 4. 在按照3设置代理后，请不要关闭终端，在当前终端执行nb run才能使机器人连上代理（请提前运行go-cqhttp）
+   **注意**：go-cqhttp也必须运行于代理环境中，保证能连接外网，否则无法发送图片！！！
 5. 在机器人成功运行后，会在机器人根目录会生成baidu_translate.json文件，若你不需要推文翻译功能，请忽略下一步
 6. 用文本编辑器打开baidu_translate.json
    ```bash

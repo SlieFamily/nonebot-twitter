@@ -2,6 +2,8 @@ import httpx
 import random
 import hashlib
 import os
+
+import nonebot
 def init_token():
     token=''
     re=httpx.get('https://github.com/kanomahoro/twitter-spider/raw/main/guest/token.json')
@@ -130,19 +132,3 @@ async def baidu_translate(appid,query,token):
     for row in data:
         text+=row['dst']+'\n'
     return '推文翻译：\n'+text
-async def download_media(media):
-    file_list=''
-    if len(media)==0:
-        return file_list
-    if not os.path.exists('data/images/twitter'):
-        os.makedirs('data/images/twitter')
-    for img in media:
-        filename=img.split('/')[-1]
-        path='data/images/twitter/'+filename
-        async with httpx.AsyncClient() as client:
-            data=await client.get(img)
-        if data.status_code==200:
-            file_list+='[CQ:image,file=twitter/%s]'%(filename)+'\n'
-            with open(path,'wb') as fp:
-                fp.write(data.content)
-    return file_list
