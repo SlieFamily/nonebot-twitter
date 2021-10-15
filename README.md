@@ -11,6 +11,8 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
 
 </div>
 
+# 此项目存在严重问题，请暂时不要使用！！！！
+
 ## 简介
 
 本插件基于[NoneBot2](https://github.com/nonebot/nonebot2)与[go-cqhttp](https://github.com/Mrs4s/go-cqhttp),可以及时将Twitter用户的最新推文推送至群聊，并且自带基于百度翻译的推文翻译接口，及时跟进你所关注的Vtuber的外网动态。
