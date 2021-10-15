@@ -6,14 +6,14 @@ import os
 import nonebot
 def init_token():
     token=''
-    re=httpx.get('https://github.com/kanomahoro/twitter-spider/raw/main/guest/token.json')
+    re=httpx.get('')
     if re.status_code==200:
         token=re.json()['value']
     return token
 async def get_token():
     token=''
     async with httpx.AsyncClient() as client:
-        re=await client.get('https://github.com/kanomahoro/twitter-spider/raw/main/guest/token.json')
+        re=await client.get('')
     if re.status_code==200:
         token=re.json()['value']
     return token
