@@ -107,10 +107,10 @@ phantomjs:[下载页面](https://phantomjs.org/download.html)
       ```
       如果能显示版本号，则能够正常运行，再将phantomjs复制到Bot根目录。
 3. 对于树莓派(Raspberry Pi)或其它arm设备的用户
-   感谢fg2it大佬的[phantomjs-on-raspberry](https://github.com/fg2it/phantomjs-on-raspberry)项目
-   Raspberry Pi(1b,2 and 3)：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-wheezy-jessie-armv6)
-   Raspberry Pi(4 and later) and arm64：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-jessie-stretch-arm64)
-   直接下载 phantomjs 可执行文件即可，然后参考(2)中的步骤
+   1. 感谢fg2it大佬的[phantomjs-on-raspberry](https://github.com/fg2it/phantomjs-on-raspberry)项目
+   2. Raspberry Pi(1b,2 and 3)：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-wheezy-jessie-armv6)
+   3. Raspberry Pi(4 and later) and arm64：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-jessie-stretch-arm64)
+   4. 直接下载 phantomjs 可执行文件即可，然后参考(2)中的步骤
 ### 配置HanayoriBot(Twitter插件)
 如果您的服务器位于境外，请忽略以下内容
 1. 首先确保你的代理软件支持http代理模式，并且已经开启，不推荐启用全局代理模式
