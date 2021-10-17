@@ -11,8 +11,6 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
 
 </div>
 
-# 此项目存在严重问题，请暂时不要使用！！！！
-
 ## 简介
 
 本插件基于[NoneBot2](https://github.com/nonebot/nonebot2)与[go-cqhttp](https://github.com/Mrs4s/go-cqhttp),可以及时将Twitter用户的最新推文推送至群聊，并且自带基于百度翻译的推文翻译接口，及时跟进你所关注的Vtuber的外网动态。
@@ -36,8 +34,7 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
 1. 前置教程
 [【【HanayoriBot】十分钟拥有你的群聊 单推(DD)机器人-哔哩哔哩】](https://b23.tv/PbPAqE)
 2. Twitter插件教程
-[【HanayoriBot】推送Vtuber最新推文至群聊](https://www.bilibili.com/video/BV1eQ4y1B7ok)
-**注意**：执行nb plugin install nonebot_plugin_twitter之前请先关闭代理
+   待完善
 
 ### 安装NoneBot2
 完整文档可以在 [这里](https://v2.nonebot.dev/) 查看。
@@ -91,7 +88,29 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
    ```bash
    nb plugin install nonebot_plugin_twitter
    ```
-
+### 安装phantomjs
+本项目依赖于[phantomjs](https://github.com/ariya/phantomjs),请将下载解压后的二进制文件放入Bot的根目录。
+phantomjs:[下载页面](https://phantomjs.org/download.html)
+1. 对于windows用户
+   请直接下载[压缩包](https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-windows.zip),解压后将phantomjs.exe放入Bot根目录。
+2. 对于Linux用户
+   请先下载[32位](https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-i686.tar.bz2)或[64位](https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2)主程序压缩包，并解压。
+   1. 系统已安装Fontconfig：
+   包名通常为:fontconfig 或 libfontconfig，这取决于你的包管理系统。
+   1. 系统已安装 GLIBCXX_3.4.9 和 GLIBC_2.7
+      通常不需要安装，但如果你无法运行 phantomjs ,请尝试升级你的gcc和g++。
+   2. 确保 phantomjs 能正常运行
+      切换至 phantomjs 可执行文件所在目录执行：
+      ```bash
+      chmod 777 phantomjs  
+      ./phantomjs --version
+      ```
+      如果能显示版本号，则能够正常运行，再将phantomjs复制到Bot根目录。
+3. 对于树莓派(Raspberry Pi)或其它arm设备的用户
+   感谢fg2it大佬的[phantomjs-on-raspberry](https://github.com/fg2it/phantomjs-on-raspberry)项目
+   Raspberry Pi(1b,2 and 3)：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-wheezy-jessie-armv6)
+   Raspberry Pi(4 and later) and arm64：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-jessie-stretch-arm64)
+   直接下载 phantomjs 可执行文件即可，然后参考(2)中的步骤
 ### 配置HanayoriBot(Twitter插件)
 如果您的服务器位于境外，请忽略以下内容
 1. 首先确保你的代理软件支持http代理模式，并且已经开启，不推荐启用全局代理模式
@@ -105,7 +124,7 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
    2. windows平台 PowerShell环境
    ```bash
    $env:HTTP_PROXY="127.0.0.1:端口号"  
-   $env:HTTPS_PROXY="127.0.0.1:端口号" 
+   $env:HTTP_PROXY="127.0.0.1:端口号" 
    ```
    3. Linux平台 Bash环境
    ```bash

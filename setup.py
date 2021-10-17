@@ -5,7 +5,7 @@ with open("README.md", "r",encoding='UTF-8') as fh:
     long_description = fh.read()
 
 setup(name='nonebot_plugin_twitter',
-      version='0.2',   
+      version='0.4',   
       description='基于NoneBot2的Twitter推送插件，自带百度翻译接口',
       long_description=long_description,
       long_description_content_type="text/markdown",  
@@ -22,6 +22,7 @@ setup(name='nonebot_plugin_twitter',
       install_requires=[
         "nb-cli>=0.5.0",
         "nonebot-adapter-cqhttp>=2.0.0a15",
-        "nonebot-plugin-apscheduler>=0.1.2"
+        "nonebot-plugin-apscheduler>=0.1.2",
+        "selenium==2.48.0"
     ]
       )

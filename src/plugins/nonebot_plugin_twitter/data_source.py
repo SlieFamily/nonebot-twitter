@@ -2,21 +2,34 @@ import httpx
 import random
 import hashlib
 import os
-
-import nonebot
-def init_token():
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from nonebot.log import logger
+def init():
     token=''
-    re=httpx.get('')
-    if re.status_code==200:
-        token=re.json()['value']
+    if not os.path.exists('phantomjs.exe') and not os.path.exists('phantomjs'):
+        logger.error('phantomjs不存在，插件加载失败！')
+        raise Exception('Twitter插件加载失败！请下载phantomjs主程序，详见项目主页')
+    dcap = dict(DesiredCapabilities.PHANTOMJS)
+    dcap["phantomjs.page.settings.userAgent"] = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38') #设置user-agent请求头
+    dcap["phantomjs.page.settings.loadImages"] = False #禁止加载图片
+    driver=webdriver.PhantomJS(desired_capabilities=dcap)
+    driver.set_page_load_timeout(20)
+    driver.set_script_timeout(20)
+    try:
+        driver.get('https://mobile.twitter.com/Twitter')
+    except:
+        logger.error('twitter.com请求超时！')
+        driver.execute_script("window.stop()")
+    data=driver.get_cookie('gt') 
+    driver.close()
+    driver.quit()
+    if data==None:
+        logger.error('token初始化失败，请检查网络/代理是否正常！')
+        raise Exception('Twitter插件加载失败！请检查代理设置，详见项目主页')
+    token=data['value']
     return token
-async def get_token():
-    token=''
-    async with httpx.AsyncClient() as client:
-        re=await client.get('')
-    if re.status_code==200:
-        token=re.json()['value']
-    return token
+    
 async def get_user_info(name:str,token:str):
     user_name=''
     user_id=''

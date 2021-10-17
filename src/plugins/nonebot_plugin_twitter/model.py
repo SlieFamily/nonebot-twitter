@@ -1,5 +1,6 @@
 import sqlite3
 from typing import List
+from nonebot.log import logger
 def Init():#初始化 
     DB=sqlite3.connect('twitter.db')
     CUR=DB.cursor()
@@ -19,7 +20,7 @@ def AddNewUser(screen_name:str,name:str,id:str):#创建用户对应的表
         CUR.execute('insert into user_list values("{}","{}","{}","")'.format(screen_name,name,id))
         DB.commit()
     else:
-        print("用户记录已存在！")
+        logger.warning("用户记录已存在！")
     CUR.close()
     DB.close()
 def AddCard(screen_name:str,ID:str,group:int)->int: #添加订阅信息 返回类型 记录是否已存在(int)1：存在
@@ -28,7 +29,7 @@ def AddCard(screen_name:str,ID:str,group:int)->int: #添加订阅信息 返回�
     table_name='_'+screen_name
     CUR.execute('select count(*) from {} where id="{}" and is_group={}'.format(table_name,ID,group))
     if CUR.fetchall()[0][0] !=0:
-        print('当前群组/私聊记录已存在！')
+        logger.warning('当前群组/私聊记录已存在！')
         return 1
     CUR.execute('insert into {} values("{}",{},{})'.format(table_name,ID,str(group),str(0)))
     DB.commit()
@@ -41,7 +42,7 @@ def DeleteCard(screen_name:str,ID:str,group:int):#删除订阅信息 返回类�
     table_name='_'+screen_name
     CUR.execute('select count(*) from {} where id="{}" and is_group={}'.format(table_name,ID,group))
     if CUR.fetchall()[0][0]==0:
-        print('记录不存在！删除失败！')
+        logger.warning('记录不存在！删除失败！')
         return 1
     CUR.execute('delete from {} where id="{}" and is_group={}'.format(table_name,ID,group))
     CUR.execute('select count(*) from {}'.format(table_name))

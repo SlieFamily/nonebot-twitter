@@ -12,19 +12,46 @@ from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot,Message,GroupMessageEvent,bot,FriendRequestEvent,GroupRequestEvent,GroupDecreaseNoticeEvent
 from nonebot.adapters.cqhttp.message import MessageSegment
 from nonebot import require
+from nonebot.log import logger
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from . import data_source
 from . import model
 from . import config
 import asyncio
 import nonebot
+import threading
 model.Init()
-config.token=data_source.init_token()
+config.token=data_source.init()
 tweet_index=0
+def flush_token():
+    dcap = dict(DesiredCapabilities.PHANTOMJS)
+    dcap["phantomjs.page.settings.userAgent"] = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38') #设置user-agent请求头
+    dcap["phantomjs.page.settings.loadImages"] = False #禁止加载图片
+    driver=webdriver.PhantomJS(desired_capabilities=dcap)
+    driver.set_page_load_timeout(20)
+    driver.set_script_timeout(20)
+    try:
+        driver.get('https://mobile.twitter.com/Twitter')
+    except:
+        logger.error('twitter.com请求超时！')
+        driver.execute_script("window.stop()")
+    data=driver.get_cookie('gt') 
+    driver.close()
+    driver.quit()
+    if data==None:
+        logger.error('token更新失败，请检查网络/代理是否正常！')
+        raise Exception('token更新失败，请检查代理设置，详见项目主页')
+    token=data['value']
+    logger.success('token更新成功！')
+    config.token=token
 scheduler = require('nonebot_plugin_apscheduler').scheduler
 @scheduler.scheduled_job('interval',minutes=5,id='flush_token')
 async def flush():#定时刷新token
-    config.token=await data_source.get_token()
-@scheduler.scheduled_job('interval',seconds=20,id='tweet')
+    flush=threading.Thread(target=flush_token)
+    flush.start()
+    logger.info('开始刷新token')
+@scheduler.scheduled_job('interval',seconds=15,id='tweet')
 async def tweet():#定时推送用户最新推文
     if model.Empty():
         return
@@ -36,6 +63,7 @@ async def tweet():#定时推送用户最新推文
     if tweet_id=='' or users[tweet_index][3]==tweet_id:
         tweet_index+=1
         return
+    logger.info('检测到 %s 的推特已更新'%(users[tweet_index][1]))
     model.UpdateTweet(users[tweet_index][0],tweet_id)
     text,translate,media_list,url=data_source.get_tweet_details(data)
     translate=await data_source.baidu_translate(config.appid,translate,config.baidu_token)
