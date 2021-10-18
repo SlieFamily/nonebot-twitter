@@ -124,7 +124,7 @@ phantomjs:[下载页面](https://phantomjs.org/download.html)
    2. windows平台 PowerShell环境
    ```bash
    $env:HTTP_PROXY="127.0.0.1:端口号"  
-   $env:HTTP_PROXY="127.0.0.1:端口号" 
+   $env:HTTPS_PROXY="127.0.0.1:端口号" 
    ```
    3. Linux平台 Bash环境
    ```bash
