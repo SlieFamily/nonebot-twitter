@@ -42,7 +42,7 @@ def DeleteCard(screen_name:str,ID:str,group:int):#删除订阅信息 返回类�
     table_name='_'+screen_name
     CUR.execute('select count(*) from {} where id="{}" and is_group={}'.format(table_name,ID,group))
     if CUR.fetchall()[0][0]==0:
-        logger.warning('记录不存在！删除失败！')
+        logger.error('记录不存在！删除失败！')
         return 1
     CUR.execute('delete from {} where id="{}" and is_group={}'.format(table_name,ID,group))
     CUR.execute('select count(*) from {}'.format(table_name))

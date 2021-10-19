@@ -42,7 +42,11 @@ async def get_user_info(name:str,token:str):
     ('variables','{"screen_name":"%s","withSafetyModeUserFields":true,"withSuperFollowsUserFields":false}'%(name)),
     )
     async with httpx.AsyncClient() as client:
-        response =await client.get('https://mobile.twitter.com/i/api/graphql/B-dCk4ph5BZ0UReWK590tw/UserByScreenName', headers=headers, params=params)
+        try:
+            response =await client.get('https://mobile.twitter.com/i/api/graphql/B-dCk4ph5BZ0UReWK590tw/UserByScreenName', headers=headers, params=params)
+        except:
+            logger.error('twitter.com访问超时，请检查代理/网络设置！')
+            logger.error('获取用户信息失败')
     if response.status_code==200:
         re=response.json()['data']
         if re!={}:
@@ -60,7 +64,12 @@ async def get_latest_tweet(user_id,token):
     ('variables', '{"userId":"%s","count":2,"withTweetQuoteCount":true,"includePromotedContent":true,"withSuperFollowsUserFields":false,"withUserResults":true,"withBirdwatchPivots":false,"withReactionsMetadata":false,"withReactionsPerspective":false,"withSuperFollowsTweetFields":false,"withVoice":true}'%user_id),
     )
     async with httpx.AsyncClient() as client:
-        response =await client.get('https://mobile.twitter.com/i/api/graphql/OMMpfG9VCdQAK0KHaU1RSQ/UserTweets', headers=headers, params=params)
+        try:
+            response =await client.get('https://mobile.twitter.com/i/api/graphql/OMMpfG9VCdQAK0KHaU1RSQ/UserTweets', headers=headers, params=params)
+        except:
+            logger.error('twitter.com访问超时，请检查代理/网络设置！')
+            logger.error('获取推文失败！')
+            return '',{}
     dict_word=response.json()
     data=dict_word['data']['user']['result']['timeline']['timeline']['instructions'][0]['entries']
     return data[0]['sortIndex'],data
