@@ -47,6 +47,7 @@ async def get_user_info(name:str,token:str):
         except:
             logger.error('twitter.com访问超时，请检查代理/网络设置！')
             logger.error('获取用户信息失败')
+            return '',''
     if response.status_code==200:
         re=response.json()['data']
         if re!={}:
