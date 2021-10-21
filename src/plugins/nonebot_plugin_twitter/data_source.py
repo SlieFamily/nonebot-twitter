@@ -145,7 +145,12 @@ async def baidu_translate(appid,query,token):
     param={'q':query,'from':'auto','to':'zh','appid':appid,'salt':salt,'sign':sign}
     url='https://fanyi-api.baidu.com/api/trans/vip/translate'
     async with httpx.AsyncClient() as client:
-        result=await client.get(url=url,params=param)
+        try:
+            result=await client.get(url=url,params=param)
+        except:
+            logger.error('fanyi-api.baidu.com访问超时，请检查网络设置！')
+            logger.error('翻译失败')
+            return ''
     if result.status_code!=200:
         return text
     data=result.json()
