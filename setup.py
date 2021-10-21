@@ -5,7 +5,7 @@ with open("README.md", "r",encoding='UTF-8') as fh:
     long_description = fh.read()
 
 setup(name='nonebot_plugin_twitter',
-      version='0.8',   
+      version='0.9',   
       description='基于NoneBot2的Twitter推送插件，自带百度翻译接口',
       long_description=long_description,
       long_description_content_type="text/markdown",  
