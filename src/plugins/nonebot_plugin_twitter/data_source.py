@@ -136,7 +136,7 @@ def get_tweet_details(data):
                 media.append(img['media_url_https'])
     return text,translate,media,url
 async def baidu_translate(appid,query,token):
-    if token=='':
+    if appid=='' or query=='' or token=='':
         return ''
     text=''
     salt=str(random.randint(32768,65536))

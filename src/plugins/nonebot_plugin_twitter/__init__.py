@@ -218,7 +218,7 @@ help = on_command('推特帮助',rule=to_me(),priority=5,permission=GROUP_ADMIN|
 @help.handle()#启动动态推送
 async def handle(bot: Bot, event: MessageEvent, state: T_State):
     menu='HanayoriBot(推特插件)目前支持的功能：\n(请将ID替换为需操作的推特ID，也即@后面的名称)\n推特关注 ID\n推特取关 ID\n推特列表\n开启翻译 ID\n关闭翻译 ID\n帮助\n'
-    info='当前版本：v0.9\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
+    info='当前版本：v1.0\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
     msg=menu+info
     Msg=Message(msg)
     await help.finish(Msg)
