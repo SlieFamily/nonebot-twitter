@@ -34,7 +34,7 @@ _✨ 基于NoneBot2的Twitter推送插件，自带百度翻译接口 ✨_
 1. 前置教程
 [【【HanayoriBot】十分钟拥有你的群聊 单推(DD)机器人-哔哩哔哩】](https://b23.tv/PbPAqE)
 2. Twitter插件教程
-   待完善
+[【【HanayoriBot】推送Vtuber推文至群聊-哔哩哔哩】](https://b23.tv/FGk5x1)
 
 ### 安装NoneBot2
 完整文档可以在 [这里](https://v2.nonebot.dev/) 查看。
