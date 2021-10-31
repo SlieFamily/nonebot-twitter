@@ -112,7 +112,7 @@ phantomjs:[下载页面](https://phantomjs.org/download.html)
    3. Raspberry Pi(4 and later) and arm64：[下载页面](https://github.com/fg2it/phantomjs-on-raspberry/releases/tag/v2.1.1-jessie-stretch-arm64)
    4. 直接下载 phantomjs 可执行文件即可，然后参考(2)中的步骤
 ### 配置HanayoriBot(Twitter插件)
-如果您的服务器位于境外，请忽略以下内容
+如果您的服务器位于境外，请忽略以下内容中的(1-4)
 1. 首先确保你的代理软件支持http代理模式，并且已经开启，不推荐启用全局代理模式
 2. 明确你的代理端口号，请咨询你的代理服务提供商
 3. 根据平台不同，请按照以下方式分别设置代理：
